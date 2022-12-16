@@ -1,6 +1,6 @@
 import sqlite3
 
-from MetaSingleton import MetaSingleton
+from todoapp.database.MetaSingleton import MetaSingleton
 
 
 class SQLiteDatabase(metaclass=MetaSingleton):

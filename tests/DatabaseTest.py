@@ -7,12 +7,10 @@ class TestClass:
         self.db = SQLiteDatabase()
         self.db.connect()
         self.db.create_table()
-        print("setup_class called once for the class")
 
     def teardown_class(self):
         # Close connection
         self.db.connection.close()
-        print("teardown_class called once for the class")
 
     def setup_module(module):
         """ setup any state specific to the execution of the given module."""
