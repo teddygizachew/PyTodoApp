@@ -1,8 +1,8 @@
-from Todo import Todo
+from Todo import TodoApp
 
 
 def main():
-    Todo().start()
+    TodoApp().start()
 
 
 if __name__ == "__main__":
