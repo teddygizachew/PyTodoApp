@@ -65,20 +65,20 @@ class SQLiteDatabase(metaclass=MetaSingleton):
         self.cur.execute(query)
         self.connection.commit()
 
-    def delete(self, item_type="tag", condition=""):
+    def delete(self, condition=""):
+        # generate the query string
+        query = f"DELETE FROM todoapp"
+        query += f" WHERE tag=?"
+        self.cur.execute(query, (condition,))
+        print(f"Successfully deleted {condition}!")
+        # execute the query
+        self.connection.commit()
+
+    def drop(self):
         # generate the query string
         query = f"DROP TABLE IF EXISTS todoapp"
 
         # add condition if provided
-        if condition == "ALL":
-            self.cur.execute(query)
-            print("Successfully deleted all data!")
-            self.connection.commit()
-
-        elif item_type == "tag":
-            query = f"DELETE FROM todoapp"
-            query += f" WHERE tag=?"
-            self.cur.execute(query, (condition,))
-            print(f"Successfully deleted {condition}!")
-        # execute the query
+        self.cur.execute(query)
+        print("Successfully deleted all data!")
         self.connection.commit()

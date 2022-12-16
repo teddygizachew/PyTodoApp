@@ -1,9 +1,6 @@
 import datetime
-
 from tabulate import tabulate
-
 from todoapp.Utils.Days import Day
-from todoapp.database.database import SQLiteDatabase
 import re
 
 
@@ -40,11 +37,10 @@ class QueryFunction(Argument):
         self.mode = mode
 
     def render(self):
+        rows = self.db.query(tag_name=self.mode.upper())
         if self.mode == "tags":
-            rows = self.db.query(tag_name=self.mode.upper())
             self.print_tags(rows)
         else:
-            rows = self.db.query(tag_name=self.mode.upper())
             self.print_info(rows)
 
     def print_tags(self, rows):
@@ -63,3 +59,15 @@ class QueryFunction(Argument):
             row[5],
         ] for row in rows],
             headers=["#", "Date", "StartTime", "EndTime", "Task", "Tag"]))
+
+
+class DeleteFunction(Argument):
+    def __init__(self, db, argument):
+        self.db = db
+        self.argument = argument
+
+    def render(self):
+        if self.argument[0].upper() == "ALL":
+            self.db.drop()
+        else:
+            self.db.delete(condition=self.argument[1].upper())
