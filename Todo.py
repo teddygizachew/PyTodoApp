@@ -1,4 +1,4 @@
-from Arguments import RecordFunction, QueryFunction, DeleteFunction, UpdateFunction
+from Arguments import RecordFunction, QueryFunction, DeleteFunction, UpdateFunction, CompleteFunction
 from todoapp.database.database import SQLiteDatabase
 import argparse
 
@@ -18,6 +18,7 @@ class TodoApp:
         parser.add_argument("--update", type=str, nargs='+')
         parser.add_argument("--remove", type=str, nargs='+')
         parser.add_argument("--record", type=str, nargs='+')
+        parser.add_argument("--complete", type=str, nargs='+')
         args = parser.parse_args()
 
         if args.record:
@@ -46,5 +47,12 @@ class TodoApp:
             function = UpdateFunction(
                 db=self.db,
                 argument=args.update
+            )
+            function.render()
+
+        if args.complete:
+            function = CompleteFunction(
+                db=self.db,
+                argument=args.complete
             )
             function.render()
