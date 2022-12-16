@@ -24,11 +24,7 @@ class TodoApp:
         if args.record:
             function = RecordFunction(
                 db=self.db,
-                date=args.record[0],
-                startTime=args.record[1],
-                endTime=args.record[2],
-                task=args.record[3],
-                tag=args.record[4]
+                argument=args.record
             )
             function.render()
 

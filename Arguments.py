@@ -10,13 +10,13 @@ class Argument(object):
 
 
 class RecordFunction(Argument):
-    def __init__(self, db, date, startTime, endTime, task, tag):
+    def __init__(self, db, argument):
         self.db = db
-        self.date = date
-        self.start_time = startTime
-        self.end_time = endTime
-        self.task = task
-        self.tag = tag
+        self.date = argument[0]
+        self.start_time = argument[1]
+        self.end_time = argument[2]
+        self.task = argument[3]
+        self.tag = argument[4]
         self.current_date_time = datetime.datetime.now()
 
     def render(self):
