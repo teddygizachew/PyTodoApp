@@ -71,3 +71,12 @@ class DeleteFunction(Argument):
             self.db.drop()
         else:
             self.db.delete(condition=self.argument[1].upper())
+
+
+class UpdateFunction(Argument):
+    def __init__(self, db, argument):
+        self.db = db
+        self.argument = argument
+
+    def render(self):
+        self.db.update(row=self.argument[0], value=self.argument[1])

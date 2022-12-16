@@ -57,12 +57,10 @@ class SQLiteDatabase(metaclass=MetaSingleton):
 
     def update(self, row, value):
         # generate the query string
-        if value == "complete" or value == "done":
-            value = 1
-        query = f"UPDATE {self.todoapp} SET completion = {value} WHERE todoID = {row}"
-        print("ASSAAS")
+        # if value == "complete" or value == "done":
+        #     value = 1
         # execute the query
-        self.cur.execute(query)
+        self.cur.execute("UPDATE todoapp SET task = ? WHERE todoID = ?", (value, row))
         self.connection.commit()
 
     def delete(self, condition=""):
