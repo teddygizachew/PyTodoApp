@@ -1,0 +1,6 @@
+todoapp.db
+venv
+tests/.pytest_cache
+.DS_Store
+.idea/
+__pycache__/
