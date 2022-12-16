@@ -1,7 +1,10 @@
 import sqlite3
 
+from MetaSingleton import MetaSingleton
 
-class SQLiteDatabase(object):
+
+class SQLiteDatabase(metaclass=MetaSingleton):
+    connection = None
     db_name = "todoapp.db"
 
     def __init__(self):
@@ -11,8 +14,11 @@ class SQLiteDatabase(object):
         self.todoapp = "todoapp"
 
     def connect(self):
-        self.connection = sqlite3.connect(self.db_name)
-        self.cur = self.connection.cursor()
+        if self.connection is None:
+            self.connection = sqlite3.connect(self.db_name)
+            self.cur = self.connection.cursor()
+
+        return self.cur
 
     def close(self):
         self.connection.close()
