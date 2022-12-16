@@ -57,8 +57,9 @@ class QueryFunction(Argument):
             row[3],
             row[4],
             row[5],
+            "Not Completed" if row[6] == 0 else "Done"
         ] for row in rows],
-            headers=["#", "Date", "StartTime", "EndTime", "Task", "Tag"]))
+            headers=["#", "Date", "StartTime", "EndTime", "Task", "Tag", "Status"]))
 
 
 class DeleteFunction(Argument):
@@ -80,3 +81,12 @@ class UpdateFunction(Argument):
 
     def render(self):
         self.db.update(row=self.argument[0], value=self.argument[1])
+
+
+class CompleteFunction(Argument):
+    def __init__(self, db, argument):
+        self.db = db
+        self.argument = argument
+
+    def render(self):
+        self.db.complete(todo_ID=self.argument[0])

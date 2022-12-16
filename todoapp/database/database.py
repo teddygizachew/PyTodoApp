@@ -25,21 +25,22 @@ class SQLiteDatabase(metaclass=MetaSingleton):
 
     def create_table(self):
         # generate the query string
+        query = 'CREATE TABLE IF NOT EXISTS todoapp (todoID INTEGER PRIMARY KEY, date date, startTime timestamp, endTime timestamp, task TEXT, tag TEXT, completion int DEFAULT 0)'
         # execute the query
-        query = 'CREATE TABLE IF NOT EXISTS todoapp (todoID INTEGER PRIMARY KEY, date date, startTime timestamp, endTime timestamp, task TEXT, tag TEXT)'
         self.cur.execute(query)
 
     def insert(self, date, startTime, endTime, task, tag):
         # execute the query
-        default_completion = 0
+
         query = 'INSERT INTO todoapp (date, startTime, endTime, task, tag) VALUES (?, ?, ?, ?, ?)'
+        # execute the query
         self.cur.execute(query, [date, startTime, endTime, task, tag])
         self.connection.commit()
         print(f"Successfully inserted '{task}'!")
 
     def query(self, tag_name=""):
         # generate the query string
-        query = f"SELECT todoID, STRFTIME('%m/%d/%Y', date), startTime, endTime, task, tag FROM {self.todoapp}"
+        query = f"SELECT todoID, STRFTIME('%m/%d/%Y', date), startTime, endTime, task, tag, completion FROM {self.todoapp}"
 
         # add condition if provided
         if tag_name == "ALL":
@@ -78,5 +79,13 @@ class SQLiteDatabase(metaclass=MetaSingleton):
 
         # add condition if provided
         self.cur.execute(query)
-        print("Successfully deleted all data!")
         self.connection.commit()
+        print("Successfully deleted all data!")
+
+    def complete(self, todo_ID):
+        # generate the query string
+        self.cur.execute("UPDATE todoapp SET completion = ? WHERE todoID = ?", (1, todo_ID))
+        self.connection.commit()
+
+        print("Successfully completed to-do!")
+
