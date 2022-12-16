@@ -4,7 +4,6 @@ from todoapp.database.MetaSingleton import MetaSingleton
 
 
 class SQLiteDatabase(metaclass=MetaSingleton):
-    connection = None
     db_name = "todoapp.db"
 
     def __init__(self):
@@ -52,14 +51,9 @@ class SQLiteDatabase(metaclass=MetaSingleton):
             query += f" WHERE tag = ?"
             self.cur.execute(query, (tag_name,))
         # execute the query and return the result
-        # self.cur.execute(query)
-        # self.cur.execute("SELECT * FROM todoapp WHERE tag =?", (tag_name,))
         return self.cur.fetchall()
 
     def update(self, row, value):
-        # generate the query string
-        # if value == "complete" or value == "done":
-        #     value = 1
         # execute the query
         self.cur.execute("UPDATE todoapp SET task = ? WHERE todoID = ?", (value, row))
         self.connection.commit()
