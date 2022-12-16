@@ -4,12 +4,12 @@ from todoapp.database.MetaSingleton import MetaSingleton
 
 
 class SQLiteDatabase(metaclass=MetaSingleton):
-    db_name = "todoapp.db"
+    _db_name = "todoapp.db"
 
     def __init__(self):
         self.cur = None
         self.connection = None
-        self.db_name = SQLiteDatabase.db_name
+        self.db_name = SQLiteDatabase._db_name
         self.todoapp = "todoapp"
 
     def connect(self):
