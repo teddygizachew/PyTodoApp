@@ -9,7 +9,14 @@ PyTodoApp is a python CLI (Command Line Interface) app that lets users manage th
 Once you’ve downloaded the repository on to your local machine, head over to your preferred IDE and open the project.
 If you run into any issues, feel free to open an issue [here](https://github.com/teddygizachew/PyTodoApp/issues)
 
-
+All of the Commands are here:
+```
+--query
+--update
+--remove
+--record
+--complete
+```
 ### 1. Input
 
 Command: 
