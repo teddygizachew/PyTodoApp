@@ -1,6 +1,6 @@
 import sqlite3
 
-from MetaSingleton import MetaSingleton
+from todoapp.database.MetaSingleton import MetaSingleton
 
 
 class SQLiteDatabase(metaclass=MetaSingleton):
@@ -57,28 +57,26 @@ class SQLiteDatabase(metaclass=MetaSingleton):
 
     def update(self, row, value):
         # generate the query string
-        if value == "complete" or value == "done":
-            value = 1
-        query = f"UPDATE {self.todoapp} SET completion = {value} WHERE todoID = {row}"
-        print("ASSAAS")
+        # if value == "complete" or value == "done":
+        #     value = 1
         # execute the query
-        self.cur.execute(query)
+        self.cur.execute("UPDATE todoapp SET task = ? WHERE todoID = ?", (value, row))
         self.connection.commit()
 
-    def delete(self, item_type="tag", condition=""):
+    def delete(self, condition=""):
+        # generate the query string
+        query = f"DELETE FROM todoapp"
+        query += f" WHERE tag=?"
+        self.cur.execute(query, (condition,))
+        print(f"Successfully deleted {condition}!")
+        # execute the query
+        self.connection.commit()
+
+    def drop(self):
         # generate the query string
         query = f"DROP TABLE IF EXISTS todoapp"
 
         # add condition if provided
-        if condition == "ALL":
-            self.cur.execute(query)
-            print("Successfully deleted all data!")
-            self.connection.commit()
-
-        elif item_type == "tag":
-            query = f"DELETE FROM todoapp"
-            query += f" WHERE tag=?"
-            self.cur.execute(query, (condition,))
-            print(f"Successfully deleted {condition}!")
-        # execute the query
+        self.cur.execute(query)
+        print("Successfully deleted all data!")
         self.connection.commit()
